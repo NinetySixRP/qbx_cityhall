@@ -73,16 +73,48 @@ local function openIdentificationMenu(closestCityhall)
     lib.showContext('cityhall_identity_menu')
 end
 
+local function openJobMenu(job)
+    local options = {
+        {
+            title = 'Apply',
+            onSelect = function()
+                lib.callback.await('qbx_cityhall:server:applyJob', false, job)
+                if not config.useTarget and inRangeCityhall then
+                    lib.showTextUI(locale('info.open_cityhall'))
+                end
+            end
+        },
+        {
+            title = 'Leave',
+            onSelect = function()
+                lib.callback.await('qbx_cityhall:server:leaveJob', false, job)
+                if not config.useTarget and inRangeCityhall then
+                    lib.showTextUI(locale('info.open_cityhall'))
+                end
+            end
+        },
+    }
+    lib.registerContext({
+        id = 'cityhall_'..job..'_menu',
+        title = locale('info.job'),
+        menu = 'cityhall_employment_menu',
+        onExit = function()
+            if not config.useTarget and inRangeCityhall then
+                lib.showTextUI(locale('info.open_cityhall'))
+            end
+        end,
+        options = options
+    })
+    lib.showContext('cityhall_'..job..'_menu')
+end
+
 local function openEmploymentMenu()
     local jobOptions = {}
     for job, label in pairsInOrder(sharedConfig.employment.jobs) do
         jobOptions[#jobOptions + 1] = {
             title = label,
             onSelect = function()
-                lib.callback.await('qbx_cityhall:server:applyJob', false, job)
-                if not config.useTarget and inRangeCityhall then
-                    lib.showTextUI(locale('info.open_cityhall'))
-                end
+                openJobMenu(job)
             end
         }
     end
