@@ -1,6 +1,6 @@
 local sharedConfig = require 'config.shared'
 
-local maxJobs = tonumber(GetConvar('qbx:max_jobs_per_player', 2))
+local maxJobsPerPlayer = GetConvarInt('qbx:max_jobs_per_player', 1)
 
 local function getClosestHall(pedCoords)
     local distance = #(pedCoords - sharedConfig.cityhalls[1].coords)
@@ -48,17 +48,13 @@ end)
 lib.callback.register('qbx_cityhall:server:applyJob', function(source, job)
     local player = exports.qbx_core:GetPlayer(source)
     if not player or not distanceCheck(source, job) then return end
-    
-    local jobsCount = 0
-    for _, _ in pairs(player.PlayerData.jobs) do
-        jobsCount += 1
+
+    if qbx.table.size(player.PlayerData.jobs) >= maxJobsPerPlayer then
+        exports.qbx_core:Notify(source, 'You cannot have more than '..maxJobsPerPlayer..' jobs!', 'error')
+        return
     end
 
-    if jobsCount < maxJobs then 
-        exports.qbx_core:AddPlayerToJob(player.PlayerData.citizenid, job, 0)
-    end
-
-    player.Functions.SetJob(job, 0)
+    exports.qbx_core:AddPlayerToJob(player.PlayerData.citizenid, job, 0)
     exports.qbx_core:Notify(source, locale('success.new_job'), 'success')
 end)
 
