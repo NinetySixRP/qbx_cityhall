@@ -38,7 +38,8 @@ lib.callback.register('qbx_cityhall:server:requestId', function(source, item, ha
         return exports.qbx_core:Notify(source, locale('error.not_enough_money'), 'error')
     end
 
-    exports.qbx_idcard:CreateMetaLicense(source, itemType.item)
+    --exports.qbx_idcard:CreateMetaLicense(source, itemType.item)
+    exports['um-idcard']:CreateMetaLicense(source, itemType.item)
     exports.qbx_core:Notify(source, locale('success.item_recieved') .. itemType.label, 'success')
 end)
 

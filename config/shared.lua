@@ -1,7 +1,7 @@
 return {
     cityhalls = {
         {
-            coords = vec3(-265.0, -963.6, 31.2),
+            coords = vec3(-110.95, 3741.11, 15.43),
             showBlip = true,
             blip = {
                 label = 'City Services',
@@ -25,7 +25,7 @@ return {
                 ['weapon'] = {
                     item = 'weaponlicense',
                     label = 'Weapon License',
-                    cost = 50,
+                    cost = 1000000,
                 },
             },
         },
@@ -37,10 +37,9 @@ return {
             unemployed = 'Unemployed',
             trucker = 'Trucker',
             taxi = 'Taxi',
-            tow = 'Tow Truck',
-            reporter = 'News Reporter',
             garbage = 'Garbage Collector',
-            bus = 'Bus Driver',
+            police = 'Policeman',
+            ambulance = 'Medic',
         },
     },
 }
