@@ -38,7 +38,6 @@ return {
             trucker = 'Trucker',
             taxi = 'Taxi',
             garbage = 'Garbage Collector',
-            police = 'Policeman',
             ambulance = 'Medic',
         },
     },
