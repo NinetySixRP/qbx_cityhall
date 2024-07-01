@@ -6,7 +6,8 @@
     "success": {
         "item_recieved": "You have received your ",
         "new_job": "Congratulations on your new job!",
-        "left_job":"You left this job!"
+        "left_job":"You left this job!",
+        "changed_id": "ID changed!"
     },
     "info": {
         "cityhall": "Cityhall",
@@ -17,6 +18,7 @@
         "obtain_license_identity": "Obtain your licenses",
         "select_job": "Select a new job",
         "price": "Price: $%s",
-        "job": "Job"
+        "job": "Job",
+        "id_changes": "Change ID"
     }
 }

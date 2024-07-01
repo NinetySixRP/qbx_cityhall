@@ -66,3 +66,28 @@ lib.callback.register('qbx_cityhall:server:leaveJob', function(source, job)
     exports.qbx_core:Notify(source, locale('success.left_job'), 'success')
 end)
 
+RegisterNetEvent('qbx_cityhall:server:changeid', function(type, changes)
+    local src = source
+    local player = exports.qbx_core:GetPlayer(src)
+    local playerPed = GetPlayerPed(src)
+    local playerCoords = GetEntityCoords(playerPed)
+
+    local closestCityhall = getClosestHall(playerCoords)
+    local cityhallCoords = sharedConfig.cityhalls[closestCityhall].coords
+
+    if not player or #(playerCoords - cityhallCoords) > 5 then return end
+
+    if player.Functions.RemoveMoney('cash', sharedConfig.idChanges[type].costs) then
+        if type == 'birthdate' then
+            changes = math.floor(changes / 1000)
+            changes = os.date('%Y-%m-%d', changes)
+        end
+        local charinfo = player.PlayerData.charinfo
+        charinfo[type] = changes
+        exports.qbx_core:Notify(src, locale('success.changed_id'), 'success')
+        DropPlayer(src, 'Wait 20 seconds until data is saved. Dont forget to replace your id and drivers license!')
+        Wait(10000)
+        MySQL.update.await('UPDATE players SET charinfo = ? WHERE citizenid = ?', { json.encode(charinfo), player.PlayerData.citizenid })
+    end
+end)
+

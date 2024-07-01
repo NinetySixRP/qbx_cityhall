@@ -152,6 +152,18 @@ local function openCityhallMenu()
         }
     end
 
+    for key, values in pairsInOrder(sharedConfig.idChanges) do
+        options[#options + 1] = {
+            title = locale('info.id_changes'),
+            onSelect = function()
+                local input = lib.inputDialog(values.title, {
+                    { type = values.type, label = values.title, required = true, format = values.format, icon = values.icon  }
+                })
+                TriggerServerEvent('qbx_cityhall:server:changeid', key, input[1])
+            end
+        }
+    end
+
     lib.registerContext({
         id = 'cityhall_menu',
         title = locale('info.cityhall'),
