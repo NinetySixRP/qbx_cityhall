@@ -46,8 +46,8 @@ return {
             title = 'Change birthdate',
             costs = 300,
             type = "date",
-            format = "YYYY/MM/DD",
-            icon = {'far', 'calender'},
+            format = "DD/MM/YYYY",
+            icon = {'far', 'calendar'},
         }
     }
 }
